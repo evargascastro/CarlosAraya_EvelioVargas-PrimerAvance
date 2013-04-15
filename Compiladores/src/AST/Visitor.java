@@ -18,4 +18,15 @@ public interface Visitor {
     public Object visitCuerpoImportDeclAuxAST(CuerpoImportDeclAuxAST c, Object arg);
     public Object visitCuerpoUnTypeNameAST(CuerpoUnTypeNameAST c, Object arg);
     public Object visitCuerpoVariasTypeNameAST(CuerpoVariasTypeNameAST c, Object arg);
+    public Object visitCuerpoMainClassAST(CuerpoMainClassAST c, Object arg);
+    public Object visitCuerpoClassDeclAST(CuerpoClassDeclAST c, Object arg);
+    public Object visitCuerpoExtendsClassDeclAuxAST(CuerpoExtendsClassDeclAuxAST c, Object arg);
+    public Object visitCuerpoImplementsClassDeclAuxAST(CuerpoImplementsClassDeclAuxAST c, Object arg);
+    public Object visitCuerpoBodyDeclVarDeclAST(CuerpoBodyDeclVarDeclAST c, Object arg);
+    public Object visitCuerpoBodyDeclMethodDeclAST(CuerpoBodyDeclMethodDeclAST c, Object arg);
+    public Object visitCuerpoBodyDeclClassDeclAST(CuerpoBodyDeclClassDeclAST c, Object arg);
+    public Object visitCuerpoVarDeclAST(CuerpoVarDeclAST c, Object arg);
+    public Object visitCuerpoMethodDeclAST(CuerpoMethodDeclAST c, Object arg);
+    public Object visitCuerpoConstrDeclorMethodDeclConstrDeclAST(CuerpoConstrDeclorMethodDeclConstrDeclAST c, Object arg);
+    public Object visitCuerpoConstrDeclorMethodDeclMethodDeclAST(CuerpoConstrDeclorMethodDeclMethodDeclAST c, Object arg);
 }

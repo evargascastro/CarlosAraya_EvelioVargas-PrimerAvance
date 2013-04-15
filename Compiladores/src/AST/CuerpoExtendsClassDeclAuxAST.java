@@ -8,16 +8,14 @@ import java_cup.runtime.Symbol;
  *
  * @author Carlos
  */
-public class CuerpoVariasTypeNameAST extends TypeNameAST{
-    public TypeNameAST tname;
+public class CuerpoExtendsClassDeclAuxAST  extends ClassDeclAuxAST{
     public Symbol ide;
     
-    public CuerpoVariasTypeNameAST(TypeNameAST a, Symbol b){
-        tname=a;
-        ide=b;
+    public CuerpoExtendsClassDeclAuxAST(Symbol a){
+        ide=a;
     }
     @Override
     public Object visit(Visitor v, Object arg) {
-        return v.visitCuerpoVariasTypeNameAST(this, arg);
+        return v.visitCuerpoExtendsClassDeclAuxAST(this, arg);
     } 
 }

@@ -255,10 +255,12 @@ public void syntax_error(Symbol cur_token)
 
 terminal TINT, TSTRING, SUMA, RESTA, MULT, DIV, DIF, IG_IG;
 terminal MEN, MEN_IG, MAY_IG, MAY, ASIGN, NEG, OR, AND, LLAVEI, LLAVED;
-terminal CORCHI, CORCHD, PYCOMA, PUNTO, COMA, NUM, STRING_CONS, ID, IMPORT;
+terminal CORCHI, CORCHD, PYCOMA, PUNTO, COMA, IMPORT;
 terminal CLASS, PUBLIC, STATIC, VOID, MAIN, RETURN, BOOL, IF, ELSE;
 terminal WHILE, THIS, TRUE, FALSE, NEW, SYSTEM, OUT, PRINTLN, LENGTH;
 terminal EXIT, IN, READ, PARENTI, PARENTD, EXTENDS, IMPLEM;
+terminal Integer NUM;
+terminal String ID, STRING_CONS;
 
 non terminal ProgramAST program;
 non terminal VariasImportDeclAST variasimportdecl;
@@ -339,41 +341,43 @@ importdeclaux ::= PUNTO MULT:ide {:RESULT = new CuerpoImportDeclAuxAST(ide);:}
 	      ;
 
 //regla de typename
-typename ::= ID:ide {:RESULT= new CuerpoUnTypeNameAST(ide);:} | typename PUNTO ID;
+typename ::= ID:ide {:RESULT= new CuerpoUnTypeNameAST(ide);:} | typename:a PUNTO ID:b {:RESULT = new CuerpoVariasTypeNameAST(a,b);:};
 
 
 
 //regla 6 mainclass
-mainclass ::= CLASS ID LLAVEI PUBLIC STATIC VOID MAIN PARENTI TSTRING CORCHI CORCHD  ID PARENTD LLAVEI statement LLAVED LLAVED
-	  ;
+mainclass ::= CLASS ID:id1 LLAVEI PUBLIC STATIC VOID MAIN PARENTI TSTRING CORCHI CORCHD  ID:id2 PARENTD LLAVEI statement:a LLAVED LLAVED
+	  {:RESULT= new CuerpoMainClassAST(id1, id2,a);:};
 
 //regla 7 classdecl
-classdecl ::= CLASS ID classdeclaux LLAVEI bodydecl LLAVED
-	  ;
+classdecl ::= CLASS ID:a classdeclaux:b LLAVEI bodydecl:c LLAVED
+	  {:RESULT = new CuerpoClassDeclAST(a,b,c):};
 
 //regla 8 classdeclaux
-classdeclaux ::= EXTENDS ID 
-	     | IMPLEM ID 
-		 | 
+classdeclaux ::= EXTENDS ID:a {:RESULT = new CuerpoExtendsClassDeclAuxAST(a);:}
+	     | IMPLEM ID:b {:RESULT = new CuerpoImplementsClassDeclAuxAST(b);:} 
+		 | {:RESULT:=null;:}
 	     ;
 
 
 
 //regla 10 bodydecl
 
-bodydecl ::= | bodydecl vardecl | bodydecl methoddecl | bodydecl classdecl;
+bodydecl ::= {:RESULT = null;:}| bodydecl:a vardecl:b {:RESULT = new CuerpoBodyDeclVarDeclAST(a,b);:} 
+		| bodydecl:c methoddecl:d {:RESULT = new CuerpoBodyDeclMethodDeclAST(c,d);:}
+		| bodydecl:e classdecl:f {:RESULT = new CuerpoBodyDeclClassDeclAST(e,f);:};
 
 //regla
-vardecl ::=  type ID PYCOMA;
+vardecl ::=  type:a ID:b PYCOMA {:RESULT = new CuerpoVarDeclAST(a,b);:};
 
-methoddecl ::= constrdeclormethoddecl PARENTI formallist PARENTD LLAVEI methoddeclauxuno LLAVED
-	    ; 
+methoddecl ::= constrdeclormethoddecl:a PARENTI formallist:b PARENTD LLAVEI methoddeclauxuno:c LLAVED
+	    {:RESULT new CuerpoMethodDeclAST(a,b,c):}; 
 //regla
 //constrdecl ::= constrdeclormethoddecl PARENTI formallist PARENTD LLAVEI variasvardecl variasstatement LLAVED
 	//   ;
 
-constrdeclormethoddecl ::= PUBLIC ID
-						| PUBLIC methoddeclaux ID;
+constrdeclormethoddecl ::= PUBLIC ID:a {:RESULT = new CuerpoConstrDeclorMethodDeclConstrDeclAST(a);:}
+						| PUBLIC methoddeclaux:b ID:c {:RESULT = new CuerpoConstrDeclorMethodDeclMethodDeclAST(b,c);:};
 //regla varias variasvardecl
 variasvardecl ::= 
 	      | variasvardecl vardecl
