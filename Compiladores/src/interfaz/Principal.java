@@ -16,6 +16,7 @@ import java.awt.TextArea;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java_cup.runtime.Symbol;
 import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -57,13 +58,13 @@ public class Principal extends javax.swing.JFrame {
         jTextArea1 = new javax.swing.JTextArea();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        nuevo = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
+        Guardar = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
-        jMenuItem6 = new javax.swing.JMenuItem();
+        compilar = new javax.swing.JMenuItem();
         jMenuItem7 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem8 = new javax.swing.JMenuItem();
@@ -124,19 +125,19 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
-        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_MASK));
-        jMenuItem1.setText("Nuevo");
-        jMenuItem1.addMouseListener(new java.awt.event.MouseAdapter() {
+        nuevo.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_MASK));
+        nuevo.setText("Nuevo");
+        nuevo.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jMenuItem1MouseClicked(evt);
+                nuevoMouseClicked(evt);
             }
         });
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        nuevo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                nuevoActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem1);
+        jMenu1.add(nuevo);
 
         jMenuItem2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem2.setText("Abrir");
@@ -147,14 +148,14 @@ public class Principal extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItem2);
 
-        jMenuItem3.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, java.awt.event.InputEvent.CTRL_MASK));
-        jMenuItem3.setText("Guardar");
-        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+        Guardar.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, java.awt.event.InputEvent.CTRL_MASK));
+        Guardar.setText("Guardar");
+        Guardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem3ActionPerformed(evt);
+                GuardarActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem3);
+        jMenu1.add(Guardar);
 
         jMenuItem4.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_W, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem4.setText("Cerrar Pestaña");
@@ -173,14 +174,14 @@ public class Principal extends javax.swing.JFrame {
 
         jMenu2.setText("Compilar");
 
-        jMenuItem6.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
-        jMenuItem6.setText("Actual");
-        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+        compilar.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
+        compilar.setText("Actual");
+        compilar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem6ActionPerformed(evt);
+                compilarActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem6);
+        jMenu2.add(compilar);
 
         jMenuItem7.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F2, 0));
         jMenuItem7.setText("Todos");
@@ -256,17 +257,17 @@ public class Principal extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-private void jMenuItem1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem1MouseClicked
+private void nuevoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_nuevoMouseClicked
 // TODO add your handling code here:
   
-}//GEN-LAST:event_jMenuItem1MouseClicked
+}//GEN-LAST:event_nuevoMouseClicked
 
 private void jMenu1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu1ActionPerformed
 // TODO add your handling code here:
   
 }//GEN-LAST:event_jMenu1ActionPerformed
 
-private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+private void nuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevoActionPerformed
 // TODO add your handling code here:
     int var= jTabbedPane1.getComponentCount();
     int x = jTextArea1.getHeight();
@@ -278,7 +279,7 @@ private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
     panelNuevo.add(areaNuevo);
     jTabbedPane1.add(panelNuevo);
     
-}//GEN-LAST:event_jMenuItem1ActionPerformed
+}//GEN-LAST:event_nuevoActionPerformed
 
 private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
 // TODO add your handling code here:
@@ -301,6 +302,7 @@ private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
     
     if(abrir == JFileChooser.APPROVE_OPTION){
         Dir = Chooser.getSelectedFile().toString();
+        System.out.println(Dir);
         ayuda = Chooser.getSelectedFile();
         
         try {
@@ -337,7 +339,7 @@ private String Extencion(String file) {
     return Exten;
   }
 
-private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+private void GuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GuardarActionPerformed
 // TODO add your handling code here:
     
      
@@ -379,7 +381,7 @@ try {
     
    else
         System.out.print("NO sirve");
-}//GEN-LAST:event_jMenuItem3ActionPerformed
+}//GEN-LAST:event_GuardarActionPerformed
 
 private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
 // TODO add your handling code here:
@@ -387,23 +389,47 @@ private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
     this.dispose();
 }//GEN-LAST:event_jMenuItem5ActionPerformed
 
-private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+private void compilarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_compilarActionPerformed
+
+    File save = new File("nuevo.java");
+     FileWriter write = null;
         try {
-            Control c = new Control();
-            String token1= "Token Numero: ";
-            String token2= "El token es un: ";
-          
-         Scanner imprimir =   c.ayuda(new FileReader(Dir));
-         Symbol res=imprimir.nextToken();
-         while(res.sym != sym.EOF){
-      jTextArea2.append(token1 + res.sym + "     " + token2 + res.value.toString() + "\n");
-      //System.out.println(res.sym);
-      //System.out.println(res.value.toString());
-      res = imprimir.nextToken();}
-        } catch (IOException e){ System.out.println(e);}
+            write = new FileWriter(save);
+             write.write(jTextArea1.getText());
+        write.close();
+        } catch (IOException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+  
+    
+
+           
+                   
+                  Control c = new Control();
+               Scanner s = null;
+        try {
+            s = c.ayuda( new FileReader(save));
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+               
+             parser p = new parser(s);
+                //parser p=new parser(new FileReader(Dir));
+        try {
+            p.parse();
+            System.out.println("EXITO");
+        } catch (Exception ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+            
+      
+     
+         
+
+       
                
         
-}//GEN-LAST:event_jMenuItem6ActionPerformed
+}//GEN-LAST:event_compilarActionPerformed
 
 private void jTextArea1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextArea1KeyPressed
 // TODO add your handling code here:
@@ -415,8 +441,8 @@ try {
 row = jTextArea1.getLineOfOffset(caretpos);
 int column = caretpos - jTextArea1.getLineStartOffset(row);
 // t1.setText(String.valueOf(column));
-jLabel2.setText(String.valueOf(column));
-jLabel4.setText(String.valueOf(row));
+jLabel2.setText(String.valueOf(row));
+jLabel4.setText(String.valueOf(column));
 } catch (BadLocationException ex) {
 Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
 }
@@ -434,8 +460,8 @@ try {
 row = jTextArea1.getLineOfOffset(caretpos);
 int column = caretpos - jTextArea1.getLineStartOffset(row);
 // t1.setText(String.valueOf(column));
-jLabel2.setText(String.valueOf(column));
-jLabel4.setText(String.valueOf(row));
+jLabel2.setText(String.valueOf(row));
+jLabel4.setText(String.valueOf(column));
 } catch (BadLocationException ex) {
 Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
 }
@@ -480,6 +506,8 @@ Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem Guardar;
+    private javax.swing.JMenuItem compilar;
     private javax.swing.JEditorPane jEditorPane1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -489,17 +517,14 @@ Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem10;
     private javax.swing.JMenuItem jMenuItem11;
     private javax.swing.JMenuItem jMenuItem12;
     private javax.swing.JMenuItem jMenuItem13;
     private javax.swing.JMenuItem jMenuItem14;
     private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
-    private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItem9;
@@ -510,5 +535,6 @@ Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextArea jTextArea2;
+    private javax.swing.JMenuItem nuevo;
     // End of variables declaration//GEN-END:variables
 }

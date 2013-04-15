@@ -1,0 +1,491 @@
+package compiladores;
+import java_cup.runtime.*;
+import AST.*;
+
+parser code {:
+	
+Scanner scanner;
+AST raiz;
+
+	public parser(java.io.Reader input){
+	scanner = new Scanner(input);
+	}
+
+
+
+	public String errores(int sys)
+{
+	if (sys == 3)
+		return("TSTRING");
+	else if (sys == 6)
+		return("MULT");
+	else if (sys == 5)
+		return("RESTA");
+	else if (sys == 45)
+		return("PRINTLN");
+	else if (sys == 44)
+		return("OUT");
+	else if (sys == 31)
+		return("STATIC");
+	else if (sys == 17)
+		return("AND");
+	else if (sys == 11)
+		return("MEN_IG");
+	else if (sys == 53)
+		return("IMPLEM");
+	else if (sys == 48)
+		return("IN");
+	else if (sys == 16)
+		return("OR");
+	else if (sys == 35)
+		return("BOOL");
+	else if (sys == 29)
+		return("CLASS");
+	else if (sys == 50)
+		return("PARENTI");
+	else if (sys == 7)
+		return("DIV");
+	else if (sys == 25)
+		return("NUM");
+	else if (sys == 4)
+		return("SUMA");
+	else if (sys == 47)
+		return("EXIT");
+	else if (sys == 36)
+		return("IF");
+	else if (sys == 33)
+		return("MAIN");
+	else if (sys == 51)
+		return("PARENTD");
+	else if (sys == 39)
+		return("THIS");
+	else if (sys == 27)
+		return("ID");
+	else if (sys == 22)
+		return("PYCOMA");
+	else if (sys == 43)
+		return("SYSTEM");
+	else if (sys == 34)
+		return("RETURN");
+	else if (sys == 40)
+		return("TRUE");
+	else if (sys == 42)
+		return("NEW");
+	else if (sys == 24)
+		return("COMA");
+	else if (sys == 8)
+		return("DIF");	
+	else if (sys == 20)
+		return("CORCHI");
+	else if (sys == 9)
+		return("IG_IG");
+	else if (sys == 32)
+		return("VOID");
+	else if (sys == 21)
+		return("CORCHD");
+	else if (sys == 28)
+		return("IMPORT");
+	else if (sys == 2)
+		return("TINT");
+	else if (sys == 15)
+		return("NEG");
+	else if (sys == 37)
+		return("ELSE");
+	else if (sys == 23)
+		return("PUNTO");
+	else if (sys == 49)
+		return("READ");
+	else if (sys == 10)
+		return("MEN");
+	else if (sys == 38)
+		return("WHILE");
+	else if (sys == 30)
+		return("PUBLIC");
+	else if (sys == 52)
+		return("EXTENDS");
+	else if (sys == 14)
+		return("ASIGN");
+	else if (sys == 26)
+		return("STRING_CONS");
+	else if (sys == 18)
+		return("LLAVEI");
+	else if (sys == 41)
+		return("FALSE");
+	else if (sys == 12)
+		return("MAY_IG");
+	else if (sys == 19)
+		return("LLAVED");
+	else if (sys == 13)
+		return("MAY");
+	else if (sys == 46)
+		return("LENGTH");
+	else
+		return("error");
+}
+public void syntax_error(Symbol cur_token)
+{
+	if (cur_token.sym == 3)
+		report_error("No se esperaba un 'String'", cur_token);
+	else if (cur_token.sym == 6)
+		report_error("No se esperaba un '*'", cur_token);
+	else if (cur_token.sym == 5)
+		report_error("No se esperaba un '-'", cur_token);
+	else if (cur_token.sym == 45)
+		report_error("No se esperaba un 'println'", cur_token);
+	else if (cur_token.sym == 44)
+		report_error("No se esperaba un 'out'", cur_token);
+	else if (cur_token.sym == 31)
+		report_error("No se esperaba un 'static'", cur_token);
+	else if (cur_token.sym == 17)
+		report_error("No se esperaba un '&&'", cur_token);
+	else if (cur_token.sym == 11)
+		report_error("No se esperaba un '<='", cur_token);
+	else if (cur_token.sym == 53)
+		report_error("No se esperaba un 'implements'", cur_token);
+	else if (cur_token.sym == 48)
+		report_error("No se esperaba un 'in'", cur_token);
+	else if (cur_token.sym == 16)
+		report_error("No se esperaba un '||'", cur_token);
+	else if (cur_token.sym == 35)
+		report_error("No se esperaba un 'boolean'", cur_token);
+	else if (cur_token.sym == 29)
+		report_error("No se esperaba un 'class'", cur_token);
+	else if (cur_token.sym == 50)
+		report_error("No se esperaba un '('", cur_token);
+	else if (cur_token.sym == 7)
+		report_error("No se esperaba un '/'", cur_token);
+	else if (cur_token.sym == 25)
+		report_error("No se esperaba un valor numérico", cur_token);
+	else if (cur_token.sym == 4)
+		report_error("No se esperaba un '+'", cur_token);
+	else if (cur_token.sym == 47)
+		report_error("No se esperaba un 'exit'", cur_token);
+	else if (cur_token.sym == 36)
+		report_error("No se esperaba un 'if'", cur_token);
+	else if (cur_token.sym == 33)
+		report_error("No se esperaba un 'main'", cur_token);
+	else if (cur_token.sym == 51)
+		report_error("No se esperaba un ')'", cur_token);
+	else if (cur_token.sym == 39)
+		report_error("No se esperaba un 'this'", cur_token);
+	else if (cur_token.sym == 27)
+		report_error("No se esperaba un identificador", cur_token);
+	else if (cur_token.sym == 22)
+		report_error("No se esperaba un ';'", cur_token);
+	else if (cur_token.sym == 43)
+		report_error("No se esperaba un 'system'", cur_token);
+	else if (cur_token.sym == 34)
+		report_error("No se esperaba un 'return'", cur_token);
+	else if (cur_token.sym == 40)
+		report_error("No se esperaba un 'true'", cur_token);
+	else if (cur_token.sym == 42)
+		report_error("No se esperaba un 'new'", cur_token);
+	else if (cur_token.sym == 24)
+		report_error("No se esperaba un ','", cur_token);
+	else if (cur_token.sym == 8)
+		report_error("No se esperaba un '!='", cur_token);
+	else if (cur_token.sym == 20)
+		report_error("No se esperaba un '['", cur_token);
+	else if (cur_token.sym == 9)
+		report_error("No se esperaba un '=='", cur_token);
+	else if (cur_token.sym == 32)
+		report_error("No se esperaba un 'void'", cur_token);
+	else if (cur_token.sym == 21)
+		report_error("No se esperaba un ']'", cur_token);
+	else if (cur_token.sym == 28)
+		report_error("No se esperaba un 'import'", cur_token);
+	else if (cur_token.sym == 2)
+		report_error("No se esperaba un 'int'", cur_token);
+	else if (cur_token.sym == 15)
+		report_error("No se esperaba un '!'", cur_token);
+	else if (cur_token.sym == 37)
+		report_error("No se esperaba un 'else'", cur_token);
+	else if (cur_token.sym == 23)
+		report_error("No se esperaba un '.'", cur_token);
+	else if (cur_token.sym == 49)
+		report_error("No se esperaba un 'read'", cur_token);
+	else if (cur_token.sym == 10)
+		report_error("No se esperaba un '<'", cur_token);
+	else if (cur_token.sym == 38)
+		report_error("No se esperaba un 'while'", cur_token);
+	else if (cur_token.sym == 30)
+		report_error("No se esperaba un 'public'", cur_token);
+	else if (cur_token.sym == 52)
+		report_error("No se esperaba un 'extends'", cur_token);
+	else if (cur_token.sym == 14)
+		report_error("No se esperaba un '='", cur_token);
+	else if (cur_token.sym == 26)
+		report_error("No se esperaba una cadena de texto", cur_token);
+	else if (cur_token.sym == 18)
+		report_error("No se esperaba un '{'", cur_token);
+	else if (cur_token.sym == 41)
+		report_error("No se esperaba un 'false'", cur_token);
+	else if (cur_token.sym == 12)
+		report_error("No se esperaba un '>='", cur_token);
+	else if (cur_token.sym == 19)
+		report_error("No se esperaba un '}'", cur_token);
+	else if (cur_token.sym == 13)
+		report_error("No se esperaba un '>'", cur_token);
+	else if (cur_token.sym == 46)
+		report_error("No se esperaba un 'length'", cur_token);	
+	else 
+		report_error("error", cur_token);}
+ public void report_error(String message, Object info) {
+   StringBuffer m = new StringBuffer("Error ");
+
+   if (info instanceof java_cup.runtime.Symbol) {
+     m.append( "(" + errores(((java_cup.runtime.Symbol)info).sym) +")" );
+     m.append(" en fila "+ ((java_cup.runtime.Symbol)info).left + " columna " + ((java_cup.runtime.Symbol)info).right );
+     
+     if (((java_cup.runtime.Symbol)info).value != null)
+       m.append(". Lexema: " + ((java_cup.runtime.Symbol)info).value.toString());
+     
+   }
+   m.append(" : "+message);
+   
+   System.out.println(m);
+ }
+
+	public void report_fatal_error(String message, Object info) {
+		report_error(message, info);
+		throw new RuntimeException("Error Fatal de Sintáxis");
+  }
+
+:}
+
+terminal TINT, TSTRING, SUMA, RESTA, MULT, DIV, DIF, IG_IG;
+terminal MEN, MEN_IG, MAY_IG, MAY, ASIGN, NEG, OR, AND, LLAVEI, LLAVED;
+terminal CORCHI, CORCHD, PYCOMA, PUNTO, COMA, NUM, STRING_CONS, ID, IMPORT;
+terminal CLASS, PUBLIC, STATIC, VOID, MAIN, RETURN, BOOL, IF, ELSE;
+terminal WHILE, THIS, TRUE, FALSE, NEW, SYSTEM, OUT, PRINTLN, LENGTH;
+terminal EXIT, IN, READ, PARENTI, PARENTD, EXTENDS, IMPLEM;
+
+non terminal ProgramAST program;
+non terminal VariasImportDeclAST variasimportdecl;
+non terminal VariasClassDeclAST variasclassdecl;
+non terminal ImportDeclAST importdecl;
+non terminal ImportDeclAuxAST importdeclaux;
+non terminal TypeNameAST typename;
+non terminal MainClassAST mainclass;
+non terminal ClassDeclAST classdecl;
+non terminal ClassDeclAuxAST classdeclaux;
+non terminal BodyDeclAST bodydecl;
+non terminal VarDeclAST vardecl;
+non terminal VariasVarDecl variasvardecl;
+non terminal VariasStatementAST variasstatement;
+non terminal MethodDeclAST methoddecl;
+non terminal MethodDeclAuxAST methoddeclaux;
+non terminal MethodDeclAuxUnoAST methoddeclauxuno;
+non terminal MethodDeclAuxDosAST methoddeclauxdos;
+non terminal FormalListAST formallist;
+non terminal FormalListAuxAST formallistaux;
+non terminal TypeAST type;
+non terminal StatementAST statement;
+non terminal IfAuxAST ifaux;
+non terminal SystemAuxAST systemaux;
+non terminal ThisAuxAST thisaux;
+non terminal ExpAST exp;
+non terminal ExpSimplAST expsimpl;
+non terminal ExpListAST explist;
+non terminal OpAST op;
+non terminal IdAuxAST idaux;
+non terminal ConstrDeclorMethodDeclAST constrdeclormethoddecl;
+
+
+precedence left PUNTO;
+precedence left ID;
+precedence left TSTRING;
+precedence left PARENTD;
+precedence left PUBLIC;
+
+precedence left AND, OR;
+precedence left MEN, MAY, MAY_IG, MEN_IG,  DIF;
+precedence left SUMA, RESTA;
+precedence left MULT, DIV;
+precedence left PARENTI, CORCHI,  LLAVEI;
+precedence left IG_IG;
+precedence left ELSE;
+
+
+
+
+
+
+start with program;
+
+//regla 1 Program
+program ::=   variasimportdecl:a  variasclassdecl:b mainclass:c
+			{:
+				parser.raiz = new CuerpoProgramAST(a,b,c);
+			:};
+	
+
+//regla 2 varias importdecl declaration
+variasimportdecl ::= {:RESULT=null:}| variasimportdecl:a importdecl:b {:RESULT = new CuerpoVariasImportDeclAST(a,b);:}
+		;
+
+
+//regla 3 varias class declaration
+variasclassdecl ::= {:RESULT=null:} |  variasclassdecl:a classdecl:b {:RESULT = new CuerpoVariasClassDeclAST(a,b);:}
+		;
+
+
+//regla 4 importdecl
+importdecl ::= IMPORT typename:a importdeclaux:b PYCOMA {:RESULT= new CuerpoImportDeclAST(a,b);:};
+
+//regla 5 ayuda al importdecl
+importdeclaux ::= PUNTO MULT:ide {:RESULT = new CuerpoImportDeclAuxAST(ide);:}
+	      | {:RESULT=null:}
+	      ;
+
+//regla de typename
+typename ::= ID:ide {:RESULT= new CuerpoUnTypeNameAST(ide);:} | typename PUNTO ID;
+
+
+
+//regla 6 mainclass
+mainclass ::= CLASS ID LLAVEI PUBLIC STATIC VOID MAIN PARENTI TSTRING CORCHI CORCHD  ID PARENTD LLAVEI statement LLAVED LLAVED
+	  ;
+
+//regla 7 classdecl
+classdecl ::= CLASS ID classdeclaux LLAVEI bodydecl LLAVED
+	  ;
+
+//regla 8 classdeclaux
+classdeclaux ::= EXTENDS ID 
+	     | IMPLEM ID 
+		 | 
+	     ;
+
+
+
+//regla 10 bodydecl
+
+bodydecl ::= | bodydecl vardecl | bodydecl methoddecl | bodydecl classdecl;
+
+//regla
+vardecl ::=  type ID PYCOMA;
+
+methoddecl ::= constrdeclormethoddecl PARENTI formallist PARENTD LLAVEI methoddeclauxuno LLAVED
+	    ; 
+//regla
+//constrdecl ::= constrdeclormethoddecl PARENTI formallist PARENTD LLAVEI variasvardecl variasstatement LLAVED
+	//   ;
+
+constrdeclormethoddecl ::= PUBLIC ID
+						| PUBLIC methoddeclaux ID;
+//regla varias variasvardecl
+variasvardecl ::= 
+	      | variasvardecl vardecl
+	      ;
+
+//regla 13 variasstatement
+variasstatement ::= statement
+		| variasstatement statement
+		;
+//regla 
+
+
+//regla methoddeclaux
+methoddeclaux ::= type
+	      | VOID
+	      ;
+//regla methoddeclauxuno
+methoddeclauxuno ::= variasvardecl variasstatement methoddeclauxdos
+		 ;
+
+//regla methoddeclauxdos
+methoddeclauxdos::= RETURN exp PYCOMA
+		 |
+		 ;
+
+//regla formallist
+formallist ::= formallistaux
+	    |
+	    ;
+
+//regla formallistaux
+formallistaux ::= type ID 
+	   |  formallistaux COMA type ID 
+	   ;
+//regla type
+type ::=TINT CORCHI CORCHD
+     | BOOL
+     | TINT
+	 | TSTRING
+     | ID
+     ;
+
+//regla  
+statement ::= LLAVEI variasstatement LLAVED
+	   | IF PARENTI exp PARENTD statement ifaux
+	   | WHILE PARENTI exp PARENTD statement
+	   | SYSTEM PUNTO OUT PUNTO PRINTLN PARENTI exp PARENTD PYCOMA
+	   | SYSTEM PUNTO EXIT PARENTI NUM PARENTD PYCOMA
+	   | ID idaux ASIGN systemaux PYCOMA
+	   | thisaux PUNTO ID PARENTI explist PARENTD PYCOMA
+	   ;
+
+//regla ifaux
+ifaux ::=ELSE statement
+	|
+	;
+
+idaux ::= CORCHI exp CORCHD
+		|
+		;
+
+
+//regla systemaux
+systemaux ::=  exp
+		   | PARENTI type PARENTD SYSTEM PUNTO IN PUNTO READ PARENTI PARENTD
+		   ;
+
+//regla thisaux
+thisaux ::= THIS
+	| ID
+	;
+
+//regla exp
+exp ::= expsimpl
+	| exp op exp
+	| exp CORCHI exp CORCHD
+	| exp PUNTO LENGTH
+	| exp PUNTO ID PARENTI explist PARENTD
+    ;
+    
+
+expsimpl ::= NUM
+	 | TRUE
+	 | FALSE
+	 | THIS
+	 | type
+	 | NEW TINT CORCHI exp CORCHD
+	 | NEW ID PARENTI explist PARENTD
+	 | NEG exp
+	 | PARENTI exp PARENTD
+	 | STRING_CONS
+	 ;
+
+
+
+explist ::= exp
+	|  explist COMA exp  
+	| 
+	;
+
+
+
+op ::= SUMA
+   | RESTA
+   | MULT
+   | DIV
+   | DIF
+   | IG_IG
+   | MEN
+   | MEN_IG
+   | MAY_IG
+   | MAY
+   | OR
+   | AND
+   ;
